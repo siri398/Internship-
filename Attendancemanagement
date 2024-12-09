@@ -1,0 +1,79 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class AttendanceManagementSystem {
+    private static HashMap<Integer, String> students = new HashMap<>();
+    private static HashMap<Integer, Integer> attendance = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\nSimple Attendance Management System");
+            System.out.println("1. Add Student");
+            System.out.println("2. Mark Attendance");
+            System.out.println("3. Display Attendance");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    markAttendance();
+                    break;
+                case 3:
+                    displayAttendance();
+                    break;
+                case 4:
+                    System.out.println("Exiting... Thank you!");
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
+
+    // Method to add a new student
+    private static void addStudent() {
+        System.out.print("Enter Student Roll Number: ");
+        int rollNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("Enter Student Name: ");
+        String name = scanner.nextLine();
+
+        students.put(rollNumber, name);
+        attendance.put(rollNumber, 0); // Initialize attendance count to 0
+        System.out.println("Student added successfully!");
+    }
+
+    // Method to mark attendance for a student
+    private static void markAttendance() {
+        System.out.print("Enter Roll Number to mark attendance: ");
+        int rollNumber = scanner.nextInt();
+
+        if (students.containsKey(rollNumber)) {
+            attendance.put(rollNumber, attendance.get(rollNumber) + 1);
+            System.out.println("Attendance marked for " + students.get(rollNumber));
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    // Method to display all attendance records
+    private static void displayAttendance() {
+        if (students.isEmpty()) {
+            System.out.println("No students available.");
+        } else {
+            System.out.println("Attendance Records:");
+            for (int rollNumber : students.keySet()) {
+                System.out.println("Roll Number: " + rollNumber + ", Name: " + students.get(rollNumber) + 
+                                   ", Attendance: " + attendance.get(rollNumber));
+            }
+        }
+    }
+}
